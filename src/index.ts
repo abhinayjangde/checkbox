@@ -16,14 +16,14 @@ app.use(express.static("public"));
 
 io.on("connection", (socket) => {
     countUsers++;
-    io.emit("live-users",countUsers)
-    
+    io.emit("live-users", countUsers)
+
     socket.on("checkbox-update", (data) => {
         state[data.index] = data.checked;
         io.emit("checkbox-update", data);
     });
 
-    socket.on("disconnect" , ()=>{
+    socket.on("disconnect", () => {
         countUsers--;
         io.emit("live-users", countUsers)
     })
@@ -34,7 +34,7 @@ app.get("/state", (req, res) => {
     return res.status(200).json(state);
 });
 
-app.get("/health", (req, res)=>{
+app.get("/health", (req, res) => {
     return res.status(200).json({ message: "I am healthy!" });
 })
 
